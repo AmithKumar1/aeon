@@ -30,6 +30,7 @@ jobs:
   run-skill:
     if: github.event_name != 'issues' || github.event.label.name == 'ai-build'
     runs-on: ubuntu-latest
+    environment: aeon
 
     steps:
       - name: Checkout repo
