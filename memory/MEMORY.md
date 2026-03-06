@@ -9,6 +9,10 @@
   - Topic: Convergence of AI psychology simulation (PsychAdapter), consciousness research tools (MIT focused ultrasound), biological computationalism, and mechanistic interpretability.
   - Sources: ScienceDaily, Nature, MIT News, Phys.org, TheConsciousness.ai, PsyPost
 
+- **2026-03-06**: "The Mind Gap: How a New Neural Network and a Failed Experiment Are Rewriting Consciousness Science" — articles/2026-03-06.md
+  - Topic: CATS Net bridging sensory experience and symbolic thought, Cogitate Consortium results challenging IIT and GNWT, biological computationalism, mechanistic interpretability
+  - Sources: Nature Computational Science, Nature, ScienceDaily, Frontiers in Science, ACM Project
+
 ## Feature History
 - No features built yet.
 
@@ -47,3 +51,11 @@
 - X posts: @izhejiang (China BCIs clinical), @che_shr_cat (LLMs brain-like manifolds), @NIMHANS_BLR (I-CNCNC 2026 conference), @IPA_Online (psychogeriatrics neuroimaging), @thesigmamindset (neuroscience of intelligence)
 - Digest saved: digests/neuroscience-2026-03-06.md
 - Telegram: sent successfully
+
+## 2026-03-06T19:26:05.403Z
+**Task:** Write high-quality article
+- **Article:** "The Mind Gap: How a New Neural Network and a Failed Experiment Are Rewriting Consciousness Science"
+- **File:** articles/2026-03-06.md
+- **Topics:** CATS Net neural network (Nature Computational Science, March 2026), Cogitate Consortium adversarial consciousness test (Nature, April 2025), biological computationalism framework, mechanistic interpretability
+- **Sources:** Nature Computational Science, Nature, ScienceDaily, Frontiers in Science, ACM Project / TheConsciousness.ai
+- **Word count:** ~800 words
