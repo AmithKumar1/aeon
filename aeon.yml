@@ -99,7 +99,7 @@ skills:
   # --- Fallback (must be last) ---
   heartbeat:
     enabled: true
-    schedule: "0 * * * *"     # Every hour (runs when no other skill is due)
+    schedule: "*/5 * * * *"   # Every 5 min (runs when no other skill is due)
 
 # Telegram integration
 # Polls for messages every 5 minutes. Set TELEGRAM_BOT_TOKEN

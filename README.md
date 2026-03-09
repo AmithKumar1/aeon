@@ -41,16 +41,17 @@ Autonomous agent running on GitHub Actions, powered by Claude Code. 33 skills ac
 
 ## How it works
 
-A GitHub Actions workflow runs every hour, checks `aeon.yml` to see if any skill is due and enabled, and if so, tells Claude Code to read and execute that skill's markdown file. After Claude finishes, the workflow commits all changes back to your repo.
+A GitHub Actions workflow runs every 5 minutes, checks `aeon.yml` to see if any skill is due and enabled, and if so, tells Claude Code to read and execute that skill's markdown file. After Claude finishes, the workflow commits all changes back to your repo.
+
+The **heartbeat** is the core loop. It runs every 5 minutes as the fallback — whenever no other skill is scheduled, heartbeat takes over and scans for anything that needs attention: stalled PRs, flagged memory items, missed skill runs, urgent issues. If nothing needs attention, it exits silently with zero noise. If something does, it notifies you and logs the finding.
 
 ```
-Hourly cron fires
-  → Checks aeon.yml — is any skill scheduled and enabled for this hour?
-    → No  → exits immediately (costs ~10 seconds)
-    → Yes → installs Claude Code
-      → claude -p "Read and execute skills/article.md"
-        → Claude reads the skill, searches the web, writes output
-          → Workflow commits all changes back to main
+Every 5 min, cron fires
+  → Checks aeon.yml — is any skill scheduled and enabled right now?
+    → Yes → runs that skill (article, digest, monitor, etc.)
+    → No  → runs heartbeat (ambient awareness)
+      → Nothing to report → exits silently, no commit
+      → Something found   → notifies you, logs it, commits
 ```
 
 Monitor-type skills that find nothing log an ack (`HEARTBEAT_OK`, `TOKEN_ALERT_OK`, etc.) and the workflow skips the commit — zero noise when nothing needs attention.
@@ -77,61 +78,61 @@ The schedule format is standard cron (`minute hour day-of-month month day-of-wee
 
 ### Research & Content
 
-| Skill | Schedule | Description |
-|-------|----------|-------------|
-| `article` | Daily 8am | Research and write a 600-800 word article |
-| `digest` | Daily 2pm | Generate and send a topic digest via notifications |
-| `rss-digest` | Daily noon | Fetch and summarize RSS feed highlights |
-| `hacker-news-digest` | Daily 11am | Top HN stories filtered by your interests |
-| `paper-digest` | Sunday 8pm | Find and summarize new papers matching your research topics |
-| `substack-draft` | Friday 4pm | Compose a polished long-form article draft |
-| `tweet-digest` | Wednesday 1pm | Aggregate and summarize tweets from tracked accounts |
-| `research-brief` | On-demand | Deep dive on a topic: web search + papers + synthesis |
-| `fetch-url` | On-demand | Pull and summarize any URL |
-| `fetch-tweets` | On-demand | Fetch tweets from a specific X user |
-| `search-papers` | Reference | Academic paper search via Semantic Scholar API |
+| Skill | Description |
+|-------|-------------|
+| `article` | Research and write a 600-800 word article |
+| `digest` | Generate and send a topic digest via notifications |
+| `rss-digest` | Fetch and summarize RSS feed highlights |
+| `hacker-news-digest` | Top HN stories filtered by your interests |
+| `paper-digest` | Find and summarize new papers matching your research topics |
+| `substack-draft` | Compose a polished long-form article draft |
+| `tweet-digest` | Aggregate and summarize tweets from tracked accounts |
+| `research-brief` | Deep dive on a topic: web search + papers + synthesis |
+| `fetch-url` | Pull and summarize any URL |
+| `fetch-tweets` | Fetch tweets from a specific X user |
+| `search-papers` | Academic paper search via Semantic Scholar API |
 
 ### Dev & Code
 
-| Skill | Schedule | Description |
-|-------|----------|-------------|
-| `pr-review` | Daily 3pm | Auto-review open PRs and post summary comments |
-| `github-monitor` | Daily 10am | Watch repos for stale PRs, new issues, and releases |
-| `issue-triage` | Tuesday 5am | Label and prioritize new GitHub issues |
-| `changelog` | Monday 1am | Generate a changelog from the week's commits |
-| `dependency-check` | Tuesday 3am | Flag outdated or vulnerable deps |
-| `code-health` | Friday 10pm | Report on TODOs, dead code, test coverage gaps |
-| `feature` | Monday 2am | Build features from GitHub issues labeled `ai-build` |
-| `build-tool` | Wednesday 4am | Design and create new skills |
+| Skill | Description |
+|-------|-------------|
+| `pr-review` | Auto-review open PRs and post summary comments |
+| `github-monitor` | Watch repos for stale PRs, new issues, and releases |
+| `issue-triage` | Label and prioritize new GitHub issues |
+| `changelog` | Generate a changelog from recent commits |
+| `dependency-check` | Flag outdated or vulnerable deps |
+| `code-health` | Report on TODOs, dead code, test coverage gaps |
+| `feature` | Build features from GitHub issues labeled `ai-build` |
+| `build-tool` | Design and create new skills |
 
 ### Crypto / On-chain
 
-| Skill | Schedule | Description |
-|-------|----------|-------------|
-| `token-alert` | Daily midnight | Notify on price/volume anomalies for tracked tokens |
-| `gas-report` | Daily 9am | Gas price trends on Ethereum/Base/Monad |
-| `wallet-digest` | Daily 5pm | Summarize recent activity across tracked wallets |
-| `on-chain-monitor` | Daily 6pm | Monitor contracts and addresses for notable events |
-| `defi-monitor` | Daily 7pm | Check pool health, positions, and yield rates |
+| Skill | Description |
+|-------|-------------|
+| `token-alert` | Notify on price/volume anomalies for tracked tokens |
+| `gas-report` | Gas price trends on Ethereum/Base/Monad |
+| `wallet-digest` | Summarize recent activity across tracked wallets |
+| `on-chain-monitor` | Monitor contracts and addresses for notable events |
+| `defi-monitor` | Check pool health, positions, and yield rates |
 
 ### Productivity
 
-| Skill | Schedule | Description |
-|-------|----------|-------------|
-| `morning-brief` | Daily 7am | Aggregated daily briefing: priorities, headlines, schedule |
-| `weekly-review` | Sunday 10pm | Synthesize the week's logs into a structured retrospective |
-| `goal-tracker` | Sunday 5am | Compare progress against goals in MEMORY.md |
-| `idea-capture` | On-demand | Quick note capture via Telegram → memory |
+| Skill | Description |
+|-------|-------------|
+| `morning-brief` | Aggregated daily briefing: priorities, headlines, schedule |
+| `weekly-review` | Synthesize the week's logs into a structured retrospective |
+| `goal-tracker` | Compare progress against goals in MEMORY.md |
+| `idea-capture` | Quick note capture via Telegram → memory |
 
 ### Meta / Agent
 
-| Skill | Schedule | Description |
-|-------|----------|-------------|
-| `heartbeat` | Hourly (fallback) | Ambient check — surface anything needing attention |
-| `memory-flush` | Daily 11pm | Promote important log entries into MEMORY.md |
-| `reflect` | Sunday 6am | Consolidate memory, prune stale entries |
-| `skill-health` | Saturday 1am | Check which scheduled skills haven't run recently |
-| `self-review` | Saturday 3am | Audit what Aeon did, what failed, what to improve |
+| Skill | Description |
+|-------|-------------|
+| `heartbeat` | Core loop — ambient check every 5 min, surfaces anything needing attention |
+| `memory-flush` | Promote important log entries into MEMORY.md |
+| `reflect` | Consolidate memory, prune stale entries |
+| `skill-health` | Check which scheduled skills haven't run recently |
+| `self-review` | Audit what Aeon did, what failed, what to improve |
 
 ## Tools
 

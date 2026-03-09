@@ -2,7 +2,7 @@ name: Run Skill
 
 on:
   schedule:
-    - cron: '0 * * * *'   # Hourly — checks aeon.yml to see if any skill is due
+    - cron: '*/5 * * * *'  # Every 5 min — checks aeon.yml to see if any skill is due
   workflow_dispatch:
     inputs:
       skill:
@@ -42,6 +42,7 @@ jobs:
           elif [ "${{ github.event_name }}" = "issues" ]; then
             echo "name=feature" >> "$GITHUB_OUTPUT"
           elif [ "${{ github.event_name }}" = "schedule" ]; then
+            MINUTE=$(date -u +%-M)
             HOUR=$(date -u +%-H)
             DOW=$(date -u +%w)
             CURRENT_SKILL=""
@@ -60,6 +61,15 @@ jobs:
                 fi
                 IFS=' ' read -r C_MIN C_HOUR C_DOM C_MONTH C_DOW <<< "${BASH_REMATCH[1]}"
                 MATCH=true
+                # Check minute: supports *, */N, or exact number
+                if [ "$C_MIN" = "*" ]; then
+                  :
+                elif [[ "$C_MIN" == */* ]]; then
+                  INTERVAL="${C_MIN#*/}"
+                  [ $((MINUTE % INTERVAL)) -ne 0 ] && MATCH=false
+                else
+                  [ "$C_MIN" != "$MINUTE" ] && MATCH=false
+                fi
                 [ "$C_HOUR" != "*" ] && [ "$C_HOUR" != "$HOUR" ] && MATCH=false
                 [ "$C_DOW" != "*" ] && [ "$C_DOW" != "$DOW" ] && MATCH=false
                 if [ "$MATCH" = true ]; then
