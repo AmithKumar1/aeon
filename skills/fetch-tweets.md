@@ -7,7 +7,7 @@ commits:
 permissions:
   - contents:write
 vars:
-  - username=aaronjmars
+  - username=elonmusk
 ---
 
 Today is ${today}. Fetch 10 random tweets from **@${username}** on X.
