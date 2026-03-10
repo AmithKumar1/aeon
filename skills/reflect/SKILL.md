@@ -19,6 +19,6 @@ Steps:
    - Move detailed notes into `memory/topics/` files (e.g. `crypto.md`, `research.md`, `projects.md`).
    - If a topic file already exists, update it rather than creating a new one.
 6. Log what you did to memory/logs/${today}.md.
-7. Send a notification via `notify.sh`: "Memory consolidated — ${today}"
+7. Send a notification via `./notify`: "Memory consolidated — ${today}"
 
 Be ruthless about pruning. Memory should be a living, useful document — not an append-only log.

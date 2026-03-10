@@ -26,7 +26,7 @@ Steps:
    status: draft
    ---
    ```
-5. Send a notification via `notify.sh`:
+5. Send a notification via `./notify`:
    ```
    *Substack draft ready*
    Title: "Article Title"

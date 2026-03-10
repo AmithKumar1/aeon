@@ -25,7 +25,7 @@ Steps:
    - Pool TVL drop > 10%
    - Position approaching liquidation
    - Impermanent loss exceeding threshold
-4. Format and send via `notify.sh`:
+4. Format and send via `./notify`:
    ```
    *DeFi Monitor — ${today}*
 

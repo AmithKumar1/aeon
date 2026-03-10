@@ -33,6 +33,6 @@ Steps:
    Transactions: N in last 24h
    Notable: description of any large or unusual txs
    ```
-3. Send via `notify.sh`.
+3. Send via `./notify`.
 4. Log current balances and findings to memory/logs/${today}.md.
 If no watched wallets configured, log "WALLET_DIGEST_OK" and end.

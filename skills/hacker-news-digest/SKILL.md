@@ -22,7 +22,7 @@ Steps:
    - If the story has a URL, fetch it with WebFetch for more context
    - Write a 1-2 sentence summary
    - Include the HN discussion link: `https://news.ycombinator.com/item?id=ID`
-4. Format and send via `notify.sh` (under 4000 chars):
+4. Format and send via `./notify` (under 4000 chars):
    ```
    *HN Digest — ${today}*
 

@@ -26,6 +26,6 @@ Steps:
    MISSED: skill4 (last ran DATE)
    ERRORS: skill5 (error description)
    ```
-5. Send via `notify.sh` if any skills are missed or erroring.
+5. Send via `./notify` if any skills are missed or erroring.
 6. Log to memory/logs/${today}.md.
 If all skills healthy, log "SKILL_HEALTH_OK" and end.

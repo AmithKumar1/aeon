@@ -17,7 +17,7 @@ When consolidating memory (reflect, memory-flush), move detail into topic files 
 
 ## Tools
 
-- **`notify.sh "message"`** — Send to all configured notification channels (Telegram, Discord, Slack). Skips unconfigured channels silently.
+- **`./notify "message"`** — Send to all configured notification channels (Telegram, Discord, Slack). Skips unconfigured channels silently.
 - Use Claude Code's built-in **WebSearch** and **WebFetch** for web searches and URL fetching.
 
 ## Composing Skills
@@ -40,7 +40,7 @@ This works because skills are just markdown instructions — there's no API boun
 
 ## Notifications
 
-Always use `notify.sh "message"` for notifications. It fans out to every configured channel:
+Always use `./notify "message"` for notifications. It fans out to every configured channel:
 
 | Channel | Outbound (notifications) | Inbound (messaging) |
 |---------|--------------------------|---------------------|

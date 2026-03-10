@@ -32,7 +32,7 @@ Read the last 2 days of memory/logs/ to avoid repeating posts.
    - For text posts (self posts), use the `selftext` field
    - Write a 1-2 sentence summary of why it matters
 
-4. **Format and send via `notify.sh`** (keep under 4000 chars):
+4. **Format and send via `./notify`** (keep under 4000 chars):
    ```
    *Reddit Digest — ${today}*
 

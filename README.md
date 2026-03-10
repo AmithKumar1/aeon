@@ -178,7 +178,7 @@ Reusable scripts available to all skills:
 
 | Tool | Description | Requires |
 |------|-------------|----------|
-| `notify.sh "msg"` | Send to all configured channels (Telegram, Discord, Slack) | Secrets for each channel |
+| `\./notify "msg"` | Send to all configured channels (Telegram, Discord, Slack) | Secrets for each channel |
 
 Skills use Claude Code's built-in WebSearch and WebFetch for web searches and URL fetching.
 
@@ -346,7 +346,7 @@ This merges template changes without overwriting your personal content, since yo
 ```
 CLAUDE.md                ← agent identity (auto-loaded by Claude Code)
 aeon.yml                 ← skill schedules + enabled flags (edit this to configure)
-notify.sh                ← multi-channel notification (Telegram/Discord/Slack)
+\./notify                ← multi-channel notification (Telegram/Discord/Slack)
 skills/                  ← each skill is a directory with SKILL.md (Agent Skills format)
   article/SKILL.md       ← research trending topics, write a 600-800 word article
   digest/SKILL.md        ← search web + X/Twitter, send a topic digest via notifications

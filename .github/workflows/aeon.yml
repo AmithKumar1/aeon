@@ -325,9 +325,32 @@ jobs:
           else
             MODEL="${CONFIG_MODEL:-claude-opus-4-6}"
           fi
+          # Generate notify script in workspace (Claude calls: ./notify "message")
+          cat > ./notify << 'NOTIFY_SCRIPT'
+          #!/usr/bin/env bash
+          set -euo pipefail
+          MSG="$1"
+          if [ -n "${TELEGRAM_BOT_TOKEN:-}" ] && [ -n "${TELEGRAM_CHAT_ID:-}" ]; then
+            curl -sf -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
+              -H "Content-Type: application/json" \
+              -d "$(jq -n --arg chat "$TELEGRAM_CHAT_ID" --arg text "$MSG" '{chat_id: $chat, text: $text, parse_mode: "Markdown"}')" > /dev/null || true
+          fi
+          if [ -n "${DISCORD_WEBHOOK_URL:-}" ]; then
+            curl -sf -X POST "$DISCORD_WEBHOOK_URL" \
+              -H "Content-Type: application/json" \
+              -d "$(jq -n --arg text "$MSG" '{content: $text}')" > /dev/null || true
+          fi
+          if [ -n "${SLACK_WEBHOOK_URL:-}" ]; then
+            curl -sf -X POST "$SLACK_WEBHOOK_URL" \
+              -H "Content-Type: application/json" \
+              -d "$(jq -n --arg text "$MSG" '{text: $text}')" > /dev/null || true
+          fi
+          NOTIFY_SCRIPT
+          chmod +x ./notify
+
           ALLOWED="Read,Write,Edit,Glob,Grep,WebFetch,WebSearch"
           ALLOWED="$ALLOWED,Bash(curl:*),Bash(gh:*),Bash(git:*),Bash(jq:*)"
-          ALLOWED="$ALLOWED,Bash(bash notify.sh:*),Bash(./notify.sh:*),Bash(bash ./notify.sh:*),Bash(sh notify.sh:*),Bash(sh ./notify.sh:*)"
+          ALLOWED="$ALLOWED,Bash(./notify:*)"
           ALLOWED="$ALLOWED,Bash(mkdir:*),Bash(ls:*),Bash(cat:*),Bash(chmod:*)"
           ALLOWED="$ALLOWED,Bash(date:*),Bash(echo:*),Bash(node:*),Bash(npm:*),Bash(npx:*)"
           ALLOWED="$ALLOWED,Bash(head:*),Bash(tail:*),Bash(wc:*),Bash(sort:*),Bash(grep:*)"
@@ -347,7 +370,7 @@ jobs:
             - If they want you to remember something, update memory/MEMORY.md.
             - For anything else, do your best and explain what you did.
 
-            Always send your response back via notify.sh so the user sees it." \
+            Always send your response back via ./notify so the user sees it." \
               --model "$MODEL" --allowedTools "$ALLOWED"
           else
             SKILL_NAME="${{ steps.skill.outputs.name }}"
@@ -368,6 +391,7 @@ jobs:
         run: |
           git config user.email "aeon@github-actions"
           git config user.name "Aeon"
+          rm -f ./notify  # Remove generated script before committing
           git add -A
           git diff --staged --quiet && exit 0
           LABEL="${{ steps.work.outputs.label }}"

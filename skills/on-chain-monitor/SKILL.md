@@ -34,7 +34,7 @@ Flag as notable:
 - New token transfers to/from watched wallets
 
 If anything notable is found:
-- Send a concise alert via `notify.sh`:
+- Send a concise alert via `./notify`:
   ```
   *On-Chain Alert*
   [chain] address: event description

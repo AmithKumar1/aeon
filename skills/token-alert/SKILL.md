@@ -23,7 +23,7 @@ Steps:
    - Price change > 10% in 24h
    - Volume spike > 3x average
    - Price crosses a threshold set in MEMORY.md
-3. If any alerts triggered, send via `notify.sh`:
+3. If any alerts triggered, send via `./notify`:
    ```
    *Token Alert — ${today}*
 

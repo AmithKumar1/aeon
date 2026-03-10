@@ -22,4 +22,4 @@ Steps:
    - **Source**: Telegram
    ```
 5. If it's actionable (feature idea or reminder), also add to MEMORY.md under "Next Priorities."
-6. Confirm via `notify.sh`: "Captured: [brief summary]"
+6. Confirm via `./notify`: "Captured: [brief summary]"

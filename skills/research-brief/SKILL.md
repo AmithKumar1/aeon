@@ -21,5 +21,5 @@ Steps:
    - **Open questions** — what's unresolved or emerging
    - **Connections** — how this relates to topics in MEMORY.md
 5. Save to articles/research-brief-${today}.md.
-6. Send an abbreviated summary via `notify.sh`.
+6. Send an abbreviated summary via `./notify`.
 7. Log what you did to memory/logs/${today}.md.

@@ -28,7 +28,7 @@ Steps:
 6. Apply any safe, obvious improvements directly:
    - Prune stale MEMORY.md entries
    - Update feeds.yml if feeds are dead
-7. Send a summary via `notify.sh`:
+7. Send a summary via `./notify`:
    ```
    *Self Review — ${today}*
    Quality: assessment

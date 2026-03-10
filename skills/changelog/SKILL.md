@@ -28,5 +28,5 @@ Steps:
    ### Fixes
    - description (sha)
    ```
-4. Send an abbreviated version via `notify.sh`.
+4. Send an abbreviated version via `./notify`.
 5. Log what you did to memory/logs/${today}.md.

@@ -29,7 +29,7 @@ Today is ${today}. Search X for tweets matching **${query}**.
 
 3. **Log to memory** what was fetched.
 
-4. **Send a notification via `notify.sh`** with a quick summary.
+4. **Send a notification via `./notify`** with a quick summary.
 
 ## Usage Examples
 

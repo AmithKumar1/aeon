@@ -35,7 +35,7 @@ Today is ${today}. Generate and send a daily **${topic}** digest.
    source link — for tweets use `https://x.com/handle/status/ID`, for articles
    use the original URL. No item without a link.
 
-4. **Send the digest via `notify.sh`.**
+4. **Send the digest via `./notify`.**
 
 5. **Log results.** Update memory with what was sent.
 

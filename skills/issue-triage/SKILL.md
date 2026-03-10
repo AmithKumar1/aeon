@@ -26,6 +26,6 @@ Steps:
      ```bash
      gh issue comment NUMBER -R owner/repo --body "Triaged as urgent — flagging for immediate attention."
      ```
-3. Send a summary via `notify.sh` if any urgent issues found.
+3. Send a summary via `./notify` if any urgent issues found.
 4. Log what you triaged to memory/logs/${today}.md.
 If no new issues, log "ISSUE_TRIAGE_OK" and end.

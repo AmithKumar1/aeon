@@ -13,7 +13,7 @@ For each watched repo, check:
 
 Compare findings against the last 48h of memory/logs/ — never alert on the same item twice.
 
-If anything is noteworthy, send a single consolidated notification via `notify.sh` with format:
+If anything is noteworthy, send a single consolidated notification via `./notify` with format:
 ```
 *GitHub Monitor*
 [repo] 2 stale PRs: #12 title, #15 title

@@ -21,7 +21,7 @@ Steps:
    - **Next week priorities** — based on what you learned
    - **Suggested improvements** — workflow changes, new skills to add, config tweaks
 4. Save to articles/weekly-review-${today}.md.
-5. Send an abbreviated version via `notify.sh`:
+5. Send an abbreviated version via `./notify`:
    ```
    *Weekly Review — ${today}*
    Done: N skills, M articles, K alerts

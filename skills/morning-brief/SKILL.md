@@ -15,7 +15,7 @@ Steps:
 2. Check for quick headlines:
    - Use WebSearch for 2-3 top headlines in AI and crypto
    - Keep headlines to one line each
-3. Format and send via `notify.sh`:
+3. Format and send via `./notify`:
    ```
    *Morning Brief — ${today}*
 

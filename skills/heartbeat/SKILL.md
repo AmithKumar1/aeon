@@ -16,5 +16,5 @@ Before sending any notification, grep memory/logs/ for the same item. If it appe
 If nothing needs attention, log "HEARTBEAT_OK" and end your response.
 
 If something needs attention:
-1. Send a concise notification via `notify.sh`
+1. Send a concise notification via `./notify`
 2. Log the finding and action taken to memory/logs/${today}.md

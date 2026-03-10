@@ -30,5 +30,5 @@ Steps:
    ### Recommendations
    - action item
    ```
-4. Send a summary via `notify.sh`.
+4. Send a summary via `./notify`.
 5. Log what you did to memory/logs/${today}.md.

@@ -43,7 +43,7 @@ Format as a weekly briefing and save to articles/paper-digest-${today}.md:
 2. ...
 ```
 
-Send abbreviated version via `notify.sh` (under 4000 chars):
+Send abbreviated version via `./notify` (under 4000 chars):
 ```
 *Paper Digest — ${today}*
 5 new papers across [topics]

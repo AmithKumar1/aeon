@@ -22,7 +22,7 @@ Steps:
 
 2. Group tweets by theme or topic, not by account.
 3. Write a 1-sentence take on each notable tweet.
-4. Format and send via `notify.sh` (under 4000 chars):
+4. Format and send via `./notify` (under 4000 chars):
    ```
    *Tweet Digest — ${today}*
 

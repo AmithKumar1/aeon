@@ -19,7 +19,7 @@ For each selected item:
 - Use WebFetch to pull the full article if the summary is too thin
 - Write a 1-2 sentence summary of why it matters
 
-Format and send via `notify.sh` (under 4000 chars):
+Format and send via `./notify` (under 4000 chars):
 ```
 *RSS Digest — ${today}*
 

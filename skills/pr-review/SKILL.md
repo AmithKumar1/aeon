@@ -23,7 +23,7 @@ Steps:
    ```bash
    gh pr review NUMBER -R owner/repo --comment --body "review text"
    ```
-4. Send a summary via `notify.sh`:
+4. Send a summary via `./notify`:
    ```
    *PR Review — ${today}*
    Reviewed N PRs across M repos.
