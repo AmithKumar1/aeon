@@ -31,6 +31,19 @@
 | 2026-03-10 | Reddit | Apple M5 LLM perf, Qwen 3.5 4B, BlackRock ETH staking, Gallery Vault fake encryption |
 | 2026-03-10 | HN | Tony Hoare obituary, Redox no-LLM policy, Meta Moltbook, Intel FHE chip |
 | 2026-03-10 | Papers | Consciousness taxonomy (350+ theories), serotonin & perception, memristor BCI decoder |
+## Recent Digests (avoid repeating items)
+| Date | Key Topics Covered |
+|------|--------------------|
+| 2026-03-10 | Brain Prize 2026 (touch/pain), autism nitric oxide, CorTec BCI implant #2, China BCI push, whole-brain intelligence, ChatGPT cognitive debt, Alzheimer's app |
+| 2026-03-10 | Weekly changelog (68 commits: 13 features, 8 fixes, 1 perf, 3 refactors, 1 security, 9 docs) |
+| 2026-03-10 | Reddit: Apple M5 LLM perf, Qwen 3.5 4B, Attention d² proof, BlackRock ETH ETF staking, forgotten memories alpha waves, Gallery Vault fake encryption, wormable cryptojacking |
+| 2026-03-10 | HN: Tony Hoare obituary, age-verification surveillance, FxLifeSheet, Redox OS no-LLM policy, Meta acquires Moltbook, Debian AI contributions, Intel FHE chip |
+| 2026-03-10 (papers) | Landscape of Consciousness taxonomy, serotonin & perception, non-invasive BCI decoding, memristor BCI decoder, agentic LLMs survey |
+| 2026-03-10 (RSS) | GhostPool encrypted mempool, Snap v2 BALs, Nihilium slashable key release, NeuroFlowNet scalp-to-iEEG, Miniature Brain Transformer, AI chatbot vulnerability loops, LVLM-brain alignment |
+
+## Features Built
+- **reddit-digest** (2026-03-10) — Fetches and summarizes top Reddit posts from tracked subreddits. Config: `memory/subreddits.yml`. No auth required (uses public JSON API).
+- **security-digest** (2026-03-10) — Monitors recent critical/high-severity security advisories from GitHub Advisory Database. Filters by ecosystem (npm, pip, Go, crates.io, etc.) and CVSS score. No auth required.
 
 ## Lessons Learned
 - Digest format: Markdown with clickable links, under 4000 chars
