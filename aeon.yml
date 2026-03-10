@@ -13,81 +13,81 @@
 skills:
   # --- Weekly skills (day-specific, listed first for priority) ---
   changelog:
-    enabled: false
+    enabled: true
     schedule: "0 1 * * 1"     # Monday at 1am UTC
   feature:
-    enabled: false
+    enabled: true
     schedule: "0 2 * * 1"     # Monday at 2am UTC
   tweet-digest:
-    enabled: false
+    enabled: true
     schedule: "0 13 * * 3"    # Wednesday at 1pm UTC
   build-skill:
-    enabled: false
+    enabled: true
     schedule: "0 4 * * 3"     # Wednesday at 4am UTC
   issue-triage:
-    enabled: false
+    enabled: true
     schedule: "0 5 * * 2"     # Tuesday at 5am UTC
   code-health:
-    enabled: false
+    enabled: true
     schedule: "0 22 * * 5"    # Friday at 10pm UTC
   substack-draft:
-    enabled: false
+    enabled: true
     schedule: "0 16 * * 5"    # Friday at 4pm UTC
   skill-health:
-    enabled: false
+    enabled: true
     schedule: "0 1 * * 6"     # Saturday at 1am UTC
   self-review:
-    enabled: false
+    enabled: true
     schedule: "0 3 * * 6"     # Saturday at 3am UTC
   reflect:
-    enabled: false
+    enabled: true
     schedule: "0 6 * * 0"     # Sunday at 6am UTC
   paper-digest:
-    enabled: false
+    enabled: true
     schedule: "0 20 * * 0"    # Sunday at 8pm UTC
   weekly-review:
-    enabled: false
+    enabled: true
     schedule: "0 22 * * 0"    # Sunday at 10pm UTC
   goal-tracker:
-    enabled: false
+    enabled: true
     schedule: "0 5 * * 0"     # Sunday at 5am UTC (before reflect)
 
   # --- Daily skills ---
   token-alert:
-    enabled: false
+    enabled: true
     schedule: "0 0 * * *"     # Daily at midnight UTC
   morning-brief:
-    enabled: false
+    enabled: true
     schedule: "0 7 * * *"     # Daily at 7am UTC
   article:
-    enabled: false
+    enabled: true
     schedule: "0 8 * * *"     # Daily at 8am UTC
   github-monitor:
-    enabled: false
+    enabled: true
     schedule: "0 10 * * *"    # Daily at 10am UTC
   hacker-news-digest:
-    enabled: false
+    enabled: true
     schedule: "0 11 * * *"    # Daily at 11am UTC
   rss-digest:
-    enabled: false
+    enabled: true
     schedule: "0 12 * * *"    # Daily at noon UTC (before digest)
   digest:
-    enabled: false
+    enabled: true
     schedule: "0 14 * * *"    # Daily at 2pm UTC
   pr-review:
-    enabled: false
+    enabled: true
     schedule: "0 15 * * *"    # Daily at 3pm UTC
   wallet-digest:
-    enabled: false
+    enabled: true
     schedule: "0 17 * * *"    # Daily at 5pm UTC
   on-chain-monitor:
-    enabled: false
+    enabled: true
     schedule: "0 18 * * *"    # Daily at 6pm UTC
   defi-monitor:
-    enabled: false
+    enabled: true
     schedule: "0 19 * * *"    # Daily at 7pm UTC
   memory-flush:
-    enabled: false
+    enabled: true
     schedule: "0 23 * * *"    # Daily at 11pm UTC
 
   # --- Fallback (must be last) ---
