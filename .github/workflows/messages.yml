@@ -224,8 +224,8 @@ jobs:
       - name: Commit results
         if: steps.work.outputs.has_message == 'true'
         run: |
-          git config user.email "aeon@github-actions"
-          git config user.name "Aeon"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config user.name "github-actions[bot]"
           rm -f ./notify
           git add -A
           git diff --staged --quiet && exit 0

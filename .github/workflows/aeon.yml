@@ -195,8 +195,8 @@ jobs:
       - name: Commit results
         if: steps.work.outputs.mode != ''
         run: |
-          git config user.email "aeon@github-actions"
-          git config user.name "Aeon"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config user.name "github-actions[bot]"
           rm -f ./notify  # Remove generated script before committing
 
           CURRENT_BRANCH=$(git branch --show-current)
