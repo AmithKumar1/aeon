@@ -235,7 +235,7 @@ jobs:
 
           SOURCE="${{ steps.msg.outputs.source }}"
           MESSAGE="${{ steps.msg.outputs.message }}"
-          claude -p "Today is $TODAY. You received this message from the user on ${SOURCE}:
+          PROMPT="Today is $TODAY. You received this message from the user on ${SOURCE}:
 
           \"$MESSAGE\"
 
@@ -247,7 +247,8 @@ jobs:
           - If they want you to remember something, update memory/MEMORY.md.
           - For anything else, do your best and explain what you did.
 
-          Always send your response back via ./notify so the user sees it." \
+          Always send your response back via ./notify so the user sees it."
+          echo "$PROMPT" | claude -p - \
             --model "$MODEL" --allowedTools "$ALLOWED"
 
       - name: Commit results

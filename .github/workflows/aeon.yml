@@ -192,7 +192,7 @@ jobs:
           Use these variables (override any defaults in the skill file):
           $VARS"
           fi
-          claude -p "$PROMPT" \
+          echo "$PROMPT" | claude -p - \
             --model "$MODEL" --allowedTools "$ALLOWED"
 
       - name: Commit results
