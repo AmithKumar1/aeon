@@ -221,8 +221,12 @@ export default function Dashboard() {
         setShowAuthModal(false)
         setAuthKey('')
       } else {
+        // Auto-setup failed — show modal so user can paste key manually
+        if (!key) {
+          setShowAuthModal(true)
+        }
         const data = await res.json()
-        flash(data.error || 'Auth setup failed')
+        flash(data.error || 'Auto-setup failed — paste your API key')
       }
     } finally {
       setAuthLoading(false)
@@ -498,10 +502,11 @@ export default function Dashboard() {
           <div className="flex gap-2">
             {authStatus && !authStatus.authenticated && (
               <button
-                onClick={() => setShowAuthModal(true)}
-                className="bg-red-600/80 hover:bg-red-500 text-white text-xs px-3 py-1.5 rounded-lg transition-colors"
+                onClick={() => setupAuth()}
+                disabled={authLoading}
+                className="bg-red-600/80 hover:bg-red-500 text-white text-xs px-3 py-1.5 rounded-lg transition-colors disabled:opacity-50"
               >
-                Authenticate
+                {authLoading ? 'Setting up...' : 'Authenticate'}
               </button>
             )}
             <button
