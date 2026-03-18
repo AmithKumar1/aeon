@@ -1,4 +1,5 @@
 name: Aeon
+run-name: "skill: ${{ inputs.skill || 'feature' }}${{ inputs.vars && format(' ({0})', inputs.vars) || '' }}"
 
 on:
   workflow_dispatch:

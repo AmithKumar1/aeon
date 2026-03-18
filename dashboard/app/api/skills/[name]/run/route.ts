@@ -5,7 +5,7 @@ import { resolve } from 'path'
 const REPO_ROOT = resolve(process.cwd(), '..')
 
 export async function POST(
-  _request: Request,
+  request: Request,
   { params }: { params: Promise<{ name: string }> },
 ) {
   try {
@@ -16,10 +16,21 @@ export async function POST(
       return NextResponse.json({ error: 'Invalid skill name' }, { status: 400 })
     }
 
-    execSync(`gh workflow run aeon.yml -f skill=${name}`, {
-      stdio: 'pipe',
-      cwd: REPO_ROOT,
-    })
+    // Read optional vars from request body
+    let vars = ''
+    try {
+      const body = await request.json()
+      if (body.vars && typeof body.vars === 'string') {
+        // Sanitize: only allow key=value pairs with safe characters
+        vars = body.vars.replace(/[^a-zA-Z0-9_=, .\-/]/g, '')
+      }
+    } catch { /* no body is fine */ }
+
+    const cmd = vars
+      ? `gh workflow run aeon.yml -f skill=${name} -f vars=${JSON.stringify(vars)}`
+      : `gh workflow run aeon.yml -f skill=${name}`
+
+    execSync(cmd, { stdio: 'pipe', cwd: REPO_ROOT })
 
     return NextResponse.json({ ok: true })
   } catch (error: unknown) {

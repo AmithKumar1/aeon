@@ -1,8 +1,8 @@
 import { NextResponse } from 'next/server'
 import { getFileContent, getDirectory, updateFile } from '@/lib/github'
 
-function parseConfig(yaml: string): Record<string, { enabled: boolean; schedule: string }> {
-  const skills: Record<string, { enabled: boolean; schedule: string }> = {}
+function parseConfig(yaml: string): Record<string, { enabled: boolean; schedule: string; vars: string }> {
+  const skills: Record<string, { enabled: boolean; schedule: string; vars: string }> = {}
   const regex = / {2}([a-z][a-z0-9-]*):\s*\n((?:\s{4}\S.*\n)*)/g
   let match
   while ((match = regex.exec(yaml)) !== null) {
@@ -11,6 +11,7 @@ function parseConfig(yaml: string): Record<string, { enabled: boolean; schedule:
     skills[name] = {
       enabled: /enabled:\s*true/.test(block),
       schedule: block.match(/schedule:\s*"([^"]*)"/)?.[ 1] || '',
+      vars: block.match(/vars:\s*"([^"]*)"/)?.[ 1] || '',
     }
   }
   return skills
@@ -60,6 +61,7 @@ export async function GET() {
       description: descs.find(d => d.name === name)?.description || '',
       enabled: config[name]?.enabled ?? false,
       schedule: config[name]?.schedule || '0 12 * * *',
+      vars: config[name]?.vars || '',
     }))
 
     return NextResponse.json({ skills })
@@ -71,7 +73,7 @@ export async function GET() {
 
 export async function PATCH(request: Request) {
   try {
-    const { name, enabled, schedule } = await request.json()
+    const { name, enabled, schedule, vars } = await request.json()
     const { content, sha } = await getFileContent('aeon.yml')
     let updated = content
 
@@ -85,6 +87,24 @@ export async function PATCH(request: Request) {
         `(  ${escapeRe(name)}:\\n    enabled: (?:true|false)\\n    schedule: ")[^"]*"`,
       )
       updated = updated.replace(re, `$1${schedule}"`)
+    }
+
+    if (typeof vars === 'string') {
+      const escaped = escapeRe(name)
+      const hasVars = new RegExp(`  ${escaped}:[\\s\\S]*?vars: "`)
+      if (hasVars.test(updated)) {
+        // Update existing vars line
+        const re = new RegExp(
+          `(  ${escaped}:\\n    enabled: (?:true|false)\\n    schedule: "[^"]*"\\n    vars: ")[^"]*"`,
+        )
+        updated = updated.replace(re, `$1${vars}"`)
+      } else if (vars) {
+        // Add vars line after schedule
+        const re = new RegExp(
+          `(  ${escaped}:\\n    enabled: (?:true|false)\\n    schedule: "[^"]*")`,
+        )
+        updated = updated.replace(re, `$1\n    vars: "${vars}"`)
+      }
     }
 
     if (updated !== content) {

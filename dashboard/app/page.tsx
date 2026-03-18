@@ -7,6 +7,7 @@ interface Skill {
   description: string
   enabled: boolean
   schedule: string
+  vars: string
 }
 
 interface Run {
@@ -152,6 +153,41 @@ function ScheduleEditor({ cron, onSave }: { cron: string; onSave: (cron: string)
       <button type="button" onClick={apply} className="bg-green-600 hover:bg-green-500 text-white text-[10px] px-2.5 py-0.5 rounded transition-colors ml-auto shrink-0">
         Apply
       </button>
+    </div>
+  )
+}
+
+function VarsEditor({ vars, onSave }: { vars: string; onSave: (vars: string) => void }) {
+  const [value, setValue] = useState(vars)
+
+  return (
+    <div className="px-4 py-2 bg-zinc-900/60 border-b border-zinc-800/30 flex items-center gap-3" onClick={(e) => e.stopPropagation()}>
+      <span className="text-[10px] text-zinc-500 shrink-0">Vars</span>
+      <input
+        type="text"
+        value={value}
+        onChange={(e) => setValue(e.target.value)}
+        onKeyDown={(e) => e.key === 'Enter' && onSave(value)}
+        placeholder="topic=solana, query=NFT trends"
+        className="flex-1 bg-zinc-800 text-zinc-200 text-[10px] rounded px-2 py-1 border border-zinc-700/50 outline-none placeholder:text-zinc-600 font-mono"
+      />
+      <button
+        type="button"
+        onClick={() => onSave(value)}
+        disabled={value === vars}
+        className="bg-green-600 hover:bg-green-500 text-white text-[10px] px-2.5 py-0.5 rounded transition-colors disabled:opacity-30 shrink-0"
+      >
+        Save
+      </button>
+      {value && (
+        <button
+          type="button"
+          onClick={() => { setValue(''); onSave('') }}
+          className="text-[10px] text-zinc-600 hover:text-zinc-400 transition-colors shrink-0"
+        >
+          Clear
+        </button>
+      )}
     </div>
   )
 }
@@ -319,19 +355,44 @@ export default function Dashboard() {
     }
   }
 
-  const refreshRuns = async () => {
+  const refreshRuns = useCallback(async () => {
     try {
       const res = await fetch('/api/runs')
       if (res.ok) setRuns((await res.json()).runs)
     } catch { /* ignore */ }
+  }, [])
+
+  // Auto-refresh runs every 10s
+  useEffect(() => {
+    const id = setInterval(refreshRuns, 10_000)
+    return () => clearInterval(id)
+  }, [refreshRuns])
+
+  const updateVars = async (name: string, vars: string) => {
+    try {
+      const res = await fetch('/api/skills', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, vars }),
+      })
+      if (res.ok) {
+        setSkills(s => s.map(sk => sk.name === name ? { ...sk, vars } : sk))
+        flash(`${name} vars updated`)
+        checkSync()
+      }
+    } catch { /* ignore */ }
   }
 
-  const runSkill = async (name: string) => {
+  const runSkill = async (name: string, vars?: string) => {
     setBusy(b => ({ ...b, [`r-${name}`]: true }))
     try {
-      const res = await fetch(`/api/skills/${name}/run`, { method: 'POST' })
+      const res = await fetch(`/api/skills/${name}/run`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ vars: vars || '' }),
+      })
       if (res.ok) {
-        flash(`${name} triggered`)
+        flash(`${name} triggered${vars ? ` (${vars})` : ''}`)
         // Poll runs a few times so the new run appears quickly
         for (const delay of [2000, 5000, 10000, 20000]) {
           setTimeout(refreshRuns, delay)
@@ -480,8 +541,16 @@ export default function Dashboard() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-zinc-500 text-sm">Loading...</div>
+      <div className="min-h-screen flex flex-col items-center justify-center gap-6">
+        <div className="relative flex items-center justify-center">
+          <div className="absolute h-16 w-16 rounded-full border border-green-500/20" style={{ animation: 'pulse-ring 2s ease-out infinite' }} />
+          <div className="absolute h-16 w-16 rounded-full border border-green-500/20" style={{ animation: 'pulse-ring 2s ease-out infinite 0.6s' }} />
+          <div className="absolute h-16 w-16 rounded-full border border-green-500/20" style={{ animation: 'pulse-ring 2s ease-out infinite 1.2s' }} />
+          <div className="h-3 w-3 rounded-full bg-green-500 shadow-[0_0_12px_rgba(34,197,94,0.4)]" />
+        </div>
+        <div style={{ animation: 'fade-in-up 0.5s ease-out 0.3s both' }}>
+          <span className="text-xs font-mono text-zinc-600 tracking-wider uppercase">Loading</span>
+        </div>
       </div>
     )
   }
@@ -590,9 +659,16 @@ export default function Dashboard() {
                     {cronLabel(skill.schedule)}
                   </span>
 
+                  {/* Vars badge */}
+                  {skill.vars && (
+                    <span className="text-[10px] px-1.5 py-0.5 rounded bg-zinc-800/60 text-zinc-500 border border-zinc-800/50 truncate max-w-[120px] font-mono" title={skill.vars}>
+                      {skill.vars}
+                    </span>
+                  )}
+
                   {/* Run */}
                   <button
-                    onClick={(e) => { e.stopPropagation(); runSkill(skill.name) }}
+                    onClick={(e) => { e.stopPropagation(); runSkill(skill.name, skill.vars) }}
                     disabled={!!busy[`r-${skill.name}`] || (authStatus !== null && !authStatus.authenticated)}
                     title={authStatus !== null && !authStatus.authenticated ? 'Authenticate first' : undefined}
                     className="text-zinc-500 hover:text-zinc-300 text-[10px] px-2 py-1 rounded bg-zinc-800/40 hover:bg-zinc-800 border border-zinc-800/50 transition-colors disabled:opacity-50 shrink-0"
@@ -601,15 +677,21 @@ export default function Dashboard() {
                   </button>
                 </div>
 
-                {/* Inline schedule editor */}
+                {/* Inline schedule + vars editor */}
                 {openSchedule === skill.name && (
-                  <ScheduleEditor
-                    cron={skill.schedule}
-                    onSave={(cron) => {
-                      updateSchedule(skill.name, cron)
-                      setOpenSchedule(null)
-                    }}
-                  />
+                  <>
+                    <ScheduleEditor
+                      cron={skill.schedule}
+                      onSave={(cron) => {
+                        updateSchedule(skill.name, cron)
+                        setOpenSchedule(null)
+                      }}
+                    />
+                    <VarsEditor
+                      vars={skill.vars}
+                      onSave={(vars) => updateVars(skill.name, vars)}
+                    />
+                  </>
                 )}
               </div>
             ))}

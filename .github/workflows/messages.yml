@@ -1,4 +1,5 @@
 name: Messages
+run-name: "${{ inputs.message && format('msg ({0}): {1}', inputs.source || 'user', inputs.message) || 'messages: poll' }}"
 
 on:
   schedule:
@@ -339,7 +340,7 @@ jobs:
             return 1
           }
 
-          declare -A SKILL_ENABLED SKILL_SCHEDULE
+          declare -A SKILL_ENABLED SKILL_SCHEDULE SKILL_VARS
           SKILL_ORDER=()
           CURRENT_SKILL=""
           while IFS= read -r line; do
@@ -348,12 +349,16 @@ jobs:
               SKILL_ORDER+=("$CURRENT_SKILL")
               SKILL_ENABLED["$CURRENT_SKILL"]="true"
               SKILL_SCHEDULE["$CURRENT_SKILL"]=""
+              SKILL_VARS["$CURRENT_SKILL"]=""
             fi
             if [[ "$line" =~ ^\ \ \ \ enabled:\ *false ]] && [ -n "$CURRENT_SKILL" ]; then
               SKILL_ENABLED["$CURRENT_SKILL"]="false"
             fi
             if [[ "$line" =~ ^\ \ \ \ schedule:\ *\"([^\"]+)\" ]] && [ -n "$CURRENT_SKILL" ]; then
               SKILL_SCHEDULE["$CURRENT_SKILL"]="${BASH_REMATCH[1]}"
+            fi
+            if [[ "$line" =~ ^\ \ \ \ vars:\ *\"([^\"]+)\" ]] && [ -n "$CURRENT_SKILL" ]; then
+              SKILL_VARS["$CURRENT_SKILL"]="${BASH_REMATCH[1]}"
             fi
           done < aeon.yml
 
@@ -375,6 +380,12 @@ jobs:
 
           # Dispatch all matched skills via the Aeon workflow
           for SKILL in "${MATCHED[@]}"; do
-            echo "Dispatching: $SKILL"
-            gh workflow run aeon.yml -f skill="$SKILL"
+            VARS="${SKILL_VARS[$SKILL]}"
+            if [ -n "$VARS" ]; then
+              echo "Dispatching: $SKILL (vars: $VARS)"
+              gh workflow run aeon.yml -f skill="$SKILL" -f vars="$VARS"
+            else
+              echo "Dispatching: $SKILL"
+              gh workflow run aeon.yml -f skill="$SKILL"
+            fi
           done
