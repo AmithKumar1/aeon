@@ -174,7 +174,7 @@ function VarEditor({ value: initial, onSave }: { value: string; onSave: (v: stri
         value={value}
         onChange={(e) => setValue(e.target.value)}
         onKeyDown={(e) => e.key === 'Enter' && onSave(value)}
-        placeholder="e.g. neuroscience, solana, owner/repo"
+        placeholder="e.g. AI, bitcoin, owner/repo"
         className="flex-1 bg-zinc-800 text-zinc-200 text-[10px] rounded px-2 py-1 border border-zinc-700/50 outline-none placeholder:text-zinc-600 font-mono"
       />
       <button
