@@ -13,6 +13,10 @@
   <img src="aeon-banner.jpg" alt="Aeon Banner" width="100%" />
 </p>
 
+## 📺 See it in Action
+
+![Aeon Demo](./aeon.gif)
+
 ---
 
 ## Why this over OpenClaw?
