@@ -399,7 +399,10 @@ export default function Dashboard() {
       const res = await fetch(`/api/runs/${run.id}/logs`)
       if (res.ok) {
         const data = await res.json()
-        setRunLogs(data.logs || '(No logs)')
+        const display = data.summary
+          ? `── Output ──\n${data.summary}\n\n── Full Logs ──\n${data.logs || '(No logs)'}`
+          : data.logs || '(No logs)'
+        setRunLogs(display)
       } else {
         setRunLogs('Failed to fetch logs')
       }
@@ -866,9 +869,9 @@ export default function Dashboard() {
                   href={selectedRun.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-[10px] text-zinc-600 hover:text-zinc-400 transition-colors shrink-0"
+                  className="text-[10px] text-zinc-500 hover:text-zinc-300 px-2 py-0.5 rounded bg-zinc-800/60 hover:bg-zinc-800 border border-zinc-800/50 transition-colors shrink-0"
                 >
-                  GitHub &rarr;
+                  Open on GitHub
                 </a>
               </div>
               <div className="flex-1 overflow-y-auto p-3">
