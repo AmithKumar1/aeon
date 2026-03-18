@@ -35,7 +35,7 @@ git clone https://github.com/aaronjmars/aeon
 cd aeon && ./aeon
 ```
 
-That's it — the dashboard opens in your browser. From there:
+Click on `http://localhost:5555` to open the dashboard in your browser. From there:
 
 1. **Authenticate** — add your Claude API key or OAuth token
 2. **Add a channel** — set up [Telegram, Discord, or Slack](#notifications) so Aeon can talk to you (and you can talk back)
