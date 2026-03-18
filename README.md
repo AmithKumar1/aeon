@@ -9,7 +9,9 @@
   Autonomous agent on GitHub Actions, powered by Claude Code. 32 skills across research, dev tooling, crypto monitoring, and productivity — all off by default, enable what you need.
 </p>
 
-![Aeon Demo](./aeon.gif)
+<p align="center">
+  <img src="aeon.gif" alt="Aeon Demo" />
+</p>
 
 ---
 
@@ -21,6 +23,8 @@
 - **Built for background tasks** — digests, monitoring, research, writing. You don't need sub-second latency for any of that.
 - **Doesn't break** — no daemon to crash, no process to restart. If GitHub Actions is up, Aeon is up. Failed skill? Next cron tick retries it.
 - **5-minute setup** — fork, add secrets, flip skills on. No Docker, no self-hosting, no config files beyond one YAML.
+
+![OpenClaw vs Aeon](./openclaw.jpg)
 
 ---
 
@@ -56,6 +60,8 @@ claude setup-token   # opens browser → prints sk-ant-oat01-... (valid 1 year)
 ---
 
 ## Skills
+
+![Skills](./skills.jpg)
 
 ### Research & Content
 | Skill | Description |
