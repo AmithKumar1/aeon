@@ -16,19 +16,22 @@ export async function POST(
       return NextResponse.json({ error: 'Invalid skill name' }, { status: 400 })
     }
 
-    // Read optional var from request body
+    // Read optional var and model from request body
     let skillVar = ''
+    let model = ''
     try {
       const body = await request.json()
       if (body.var && typeof body.var === 'string') {
-        // Sanitize: only allow safe characters
         skillVar = body.var.replace(/[^a-zA-Z0-9_ .\-/#@]/g, '')
+      }
+      if (body.model && typeof body.model === 'string') {
+        model = body.model.replace(/[^a-zA-Z0-9_\-]/g, '')
       }
     } catch { /* no body is fine */ }
 
-    const cmd = skillVar
-      ? `gh workflow run aeon.yml -f skill=${name} -f var=${JSON.stringify(skillVar)}`
-      : `gh workflow run aeon.yml -f skill=${name}`
+    let cmd = `gh workflow run aeon.yml -f skill=${name}`
+    if (skillVar) cmd += ` -f var=${JSON.stringify(skillVar)}`
+    if (model) cmd += ` -f model=${JSON.stringify(model)}`
 
     execSync(cmd, { stdio: 'pipe', cwd: REPO_ROOT })
 

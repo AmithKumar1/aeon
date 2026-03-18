@@ -437,7 +437,7 @@ export default function Dashboard() {
       const res = await fetch(`/api/skills/${name}/run`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ var: v || '' }),
+        body: JSON.stringify({ var: v || '', model }),
       })
       if (res.ok) {
         flash(`${name} triggered${v ? ` (${v})` : ''}`)
