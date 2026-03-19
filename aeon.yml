@@ -89,18 +89,6 @@ skills:
     enabled: false
     schedule: "0 19 * * 1"
 
-  ee:
-    enabled: false
-    schedule: "0 12 * * *"
-
-  su:
-    enabled: false
-    schedule: "0 12 * * *"
-
-  hn-digest:
-    enabled: false
-    schedule: "0 12 * * *"
-
   # --- Fallback (must be last) ---
   heartbeat:
     enabled: true
