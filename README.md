@@ -6,7 +6,7 @@
 
 <p align="center">
   <strong>Background intelligence that evolves with you.</strong><br>
-  Autonomous agent on GitHub Actions, powered by Claude Code. 32 skills across research, dev tooling, crypto monitoring, and productivity — all off by default, enable what you need.
+  Autonomous agent on GitHub Actions, powered by Claude Code. 47 skills across research, dev tooling, crypto monitoring, and productivity — all off by default, enable what you need.
 </p>
 
 <p align="center">
@@ -73,54 +73,73 @@ claude setup-token   # opens browser → prints sk-ant-oat01-... (valid 1 year)
 ### Research & Content
 | Skill | Description |
 |-------|-------------|
-| `article` | Research and write a 600–800 word article |
-| `digest` | Topic digest via notifications |
-| `rss-digest` | Summarize RSS/Atom feed highlights |
-| `hacker-news-digest` | Top HN stories filtered by your interests |
-| `paper-digest` | New papers from arXiv / Semantic Scholar |
-| `tweet-digest` | Aggregate tweets from tracked accounts |
-| `research-brief` | Deep dive: web search + papers + synthesis |
-| `fetch-tweets` | Search X by keyword, user, or hashtag |
-| `search-papers` | Academic paper search (on-demand) |
-| `reddit-digest` | Top posts from tracked subreddits |
-| `security-digest` | Critical CVEs from GitHub Advisory DB |
+| `article` | Research trending topics and write a publication-ready article |
+| `digest` | Generate and send a daily digest on a configurable topic |
+| `rss-digest` | Fetch, summarize, and deliver RSS feed highlights |
+| `hacker-news-digest` | Top HN stories filtered by keywords relevant to your interests |
+| `hn-digest` | Top Hacker News stories filtered by interests |
+| `paper-digest` | Find and summarize new papers matching tracked research interests |
+| `paper-pick` | Find the one paper you should read today from Semantic Scholar and arXiv |
+| `tweet-digest` | Aggregate and summarize tweets from tracked accounts |
+| `list-digest` | Top tweets from tracked X lists in the past 24 hours |
+| `research-brief` | Deep dive on a topic combining web search, papers, and synthesis |
+| `fetch-tweets` | Search X/Twitter for tweets by keyword, username, or both |
+| `search-papers` | Search for recent academic papers on topics of interest |
+| `reddit-digest` | Fetch and summarize top Reddit posts from tracked subreddits |
+| `security-digest` | Monitor recent security advisories from GitHub Advisory DB |
 
 ### Dev & Code
 | Skill | Description |
 |-------|-------------|
-| `pr-review` | Auto-review open PRs, post summary comments |
-| `github-monitor` | Watch repos for stale PRs, issues, releases |
-| `issue-triage` | Label and prioritize new GitHub issues |
-| `changelog` | Generate changelog from recent commits |
-| `code-health` | TODOs, dead code, test coverage gaps |
-| `feature` | Build features from issues labeled `ai-build` |
-| `build-skill` | Design and create new skills |
-| `search-skill` | Search the open agent skills ecosystem |
+| `pr-review` | Auto-review open PRs on watched repos and post summary comments |
+| `github-monitor` | Watch repos for stale PRs, new issues, and new releases |
+| `github-issues` | Check all your repos for new open issues in the last 24 hours |
+| `issue-triage` | Label and prioritize new GitHub issues on watched repos |
+| `changelog` | Generate a changelog from recent commits across watched repos |
+| `code-health` | Weekly report on TODOs, dead code, and test coverage gaps |
+| `feature` | Build new features from GitHub issues or improve the agent |
+| `build-skill` | Design and build a new reusable skill |
+| `search-skill` | Search the open agent skills ecosystem for useful skills to install |
 
 ### Crypto / On-chain
 | Skill | Description |
 |-------|-------------|
-| `token-alert` | Notify on price/volume anomalies |
-| `wallet-digest` | Summarize activity across tracked wallets |
-| `on-chain-monitor` | Monitor contracts for notable events |
-| `defi-monitor` | Pool health, positions, yield rates |
+| `token-alert` | Notify on price or volume anomalies for tracked tokens |
+| `token-movers` | Top 10 token winners and losers by 24h price change from CoinGecko |
+| `trending-coins` | Top trending and most searched coins on CoinGecko |
+| `wallet-digest` | Summarize recent wallet activity across tracked addresses |
+| `on-chain-monitor` | Monitor blockchain addresses and contracts for notable activity |
+| `defi-monitor` | Check pool health, positions, and yield rates for tracked protocols |
+| `defi-overview` | Daily overview of DeFi activity from DeFiLlama — TVL, top chains, top protocols |
+| `polymarket` | Trending and top markets on Polymarket — volume, new markets, biggest movers |
+| `polymarket-comments` | Top trending Polymarket markets and most interesting comments |
+
+### Social & Writing
+| Skill | Description |
+|-------|-------------|
+| `write-tweet` | Generate 10 tweet drafts across 5 size tiers on a topic from today's outputs |
+| `reply-maker` | Generate two reply options for 5 tweets from tracked accounts or topics |
+| `refresh-x` | Fetch a tracked X/Twitter account's latest tweets and save the gist to memory |
 
 ### Productivity
 | Skill | Description |
 |-------|-------------|
-| `morning-brief` | Daily briefing: priorities, headlines, schedule |
-| `weekly-review` | Synthesize the week's logs into a retrospective |
-| `goal-tracker` | Compare progress against goals in `MEMORY.md` |
-| `idea-capture` | Quick note via Telegram → memory |
+| `morning-brief` | Aggregated daily briefing — digests, priorities, and what's ahead |
+| `daily-routine` | Morning briefing combining token movers, tweet roundup, paper pick, GitHub issues, and HN digest |
+| `weekly-review` | Synthesize the week's logs into a structured retrospective |
+| `goal-tracker` | Compare current progress against goals stored in `MEMORY.md` |
+| `idea-capture` | Quick note capture triggered via Telegram — stores to memory |
+| `action-converter` | 5 concrete real-life actions for today based on recent signals and memory |
+| `startup-idea` | 2 startup ideas tailored to your skills, interests, and context |
 
 ### Meta / Agent
 | Skill | Description |
 |-------|-------------|
-| `heartbeat` | Core loop — ambient check, surfaces anything needing attention |
-| `memory-flush` | Promote important log entries into `MEMORY.md` |
-| `reflect` | Consolidate memory, prune stale entries |
+| `heartbeat` | Proactive ambient check — surface anything worth attention |
+| `memory-flush` | Promote important recent log entries into `MEMORY.md` |
+| `reflect` | Review recent activity, consolidate memory, and prune stale entries |
 | `skill-health` | Check which scheduled skills haven't run recently |
-| `self-review` | Audit what Aeon did, what failed, what to improve |
+| `self-review` | Weekly audit of what Aeon did, what failed, and what to improve |
 
 ---
 
@@ -334,7 +353,7 @@ skills/                  ← each skill is SKILL.md (Agent Skills format)
   article/
   digest/
   heartbeat/
-  ...                    ← 32 skills total
+  ...                    ← 47 skills total
 memory/
   MEMORY.md              ← goals, active topics, pointers
   topics/                ← detailed notes by topic
